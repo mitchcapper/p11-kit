@@ -183,7 +183,7 @@ getprogname (void)
 
 extern char **__argv;
 static char prognamebuf[256];
-
+#ifndef _WIN32
 const char *
 getprogname (void)
 {
@@ -211,7 +211,7 @@ getprogname (void)
 
 	return prognamebuf;
 }
-
+#endif
 #endif /* OS_WIN32 */
 
 #endif /* HAVE_GETPROGNAME */
@@ -548,7 +548,7 @@ strndup (const char *data,
 }
 
 #endif /* HAVE_STRNDUP */
-
+#ifndef _WIN32
 #ifndef HAVE_REALLOCARRAY
 
 void *
@@ -564,8 +564,9 @@ reallocarray (void *ptr,
 	return realloc (ptr, nmemb * size);
 }
 
-#endif /* HAVE_MEMDUP */
 
+#endif /* HAVE_MEMDUP */
+#endif
 #ifndef HAVE_STRCONCAT
 
 #include <stdarg.h>
@@ -715,7 +716,7 @@ gmtime_r (const time_t *timep,
 #if !defined(HAVE_MKDTEMP) || !defined(HAVE_MKSTEMP)
 #include <sys/stat.h>
 #include <fcntl.h>
-
+#define maxpathlen 1024
 static int
 _gettemp (char *path,
           int *doopen,
@@ -724,7 +725,7 @@ _gettemp (char *path,
 {
 	static const char padchar[] =
 		"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-	static const int maxpathlen = 1024;
+	//static const int maxpathlen = 1024;
 
 	char *start, *trv, *suffp, *carryp;
 	char *pad;
@@ -792,7 +793,7 @@ _gettemp (char *path,
 #ifdef OS_UNIX
 			if (mkdir (path, 0700) == 0)
 #else
-			if (mkdir (path) == 0)
+			if (mkdir (path, 0700) == 0)
 #endif
 				return (1);
 			if (errno != EEXIST)

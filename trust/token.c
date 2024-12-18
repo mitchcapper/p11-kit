@@ -663,7 +663,7 @@ mkdir_with_parents (const char *path)
 	int mode = S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH;
 	if (mkdir (path, mode) == 0)
 #else
-	if (mkdir (path) == 0)
+	if (mkdir (path, 0700) == 0)
 #endif
 		return true;
 
@@ -677,7 +677,7 @@ mkdir_with_parents (const char *path)
 #ifdef OS_UNIX
 				if (mkdir (path, mode) == 0)
 #else
-				if (mkdir (path) == 0)
+				if (mkdir (path, 0700) == 0)
 #endif
 					return true;
 			}

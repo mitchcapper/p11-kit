@@ -48,6 +48,7 @@ p11_kit_trust_la_LIBADD = \
 	libp11-library.la \
 	libp11-asn1.la \
 	libp11-common.la \
+	lib/libp11kit.la \
 	$(LIBTASN1_LIBS) \
 	$(HASH_LIBS) \
 	$(NULL)
@@ -81,6 +82,7 @@ trust_trust_LDADD = \
 	libp11-kit.la \
 	libp11-asn1.la \
 	libp11-common.la \
+	lib/libp11kit.la \
 	libp11-tool.la \
 	$(LTLIBINTL) \
 	$(LIBTASN1_LIBS) \
@@ -139,6 +141,7 @@ trust_LIBS = \
 	libp11-test.la \
 	libp11-asn1.la \
 	libp11-common.la \
+	lib/libp11kit.la \
 	$(LIBTASN1_LIBS) \
 	$(HASH_LIBS) \
 	$(NULL)
@@ -276,6 +279,7 @@ frob_ku_CFLAGS = $(trust_CFLAGS)
 frob_nss_trust_SOURCES = trust/frob-nss-trust.c
 frob_nss_trust_LDADD = \
 	libp11-common.la \
+	lib/libp11kit.la \
 	libp11-kit.la \
 	$(HASH_LIBS) \
 	$(NULL)

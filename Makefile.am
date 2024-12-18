@@ -3,6 +3,8 @@ NULL =
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir) \
+	-I$(top_srcdir)/lib \
+	-I$(top_builddir)/lib \
 	-I$(top_srcdir)/common \
 	-I$(top_builddir) \
 	-I$(top_builddir)/common \
@@ -64,9 +66,9 @@ PKCS11_JSON_INPUT = $(srcdir)/common/pkcs11.h
 
 include subprojects/pkcs11-json/Makefile.am
 
-SUBDIRS = . doc po
+ SUBDIRS = lib .
 
-ACLOCAL_AMFLAGS = -I build/m4
+ACLOCAL_AMFLAGS = -I m4
 
 DISTCHECK_CONFIGURE_FLAGS = \
 	--enable-doc \
@@ -89,7 +91,7 @@ AM_TESTS_ENVIRONMENT = \
 AM_TESTS_FD_REDIRECT = 9>&2;
 
 LOG_DRIVER = env AM_TAP_AWK='$(AWK)' $(SHELL) \
-	$(top_srcdir)/build/litter/tap-driver.sh
+	$(top_srcdir)/build-aux/tap-driver.sh
 LOG_DRIVER_FLAGS = --comments --ignore-exit
 
 MEMCHECK_ENV = $(TEST_RUNNER) valgrind --error-exitcode=80 --quiet
@@ -113,7 +115,7 @@ dist-hook:
 		echo Creating ChangeLog && \
 		( cd "$(top_srcdir)" && \
 		  echo '# Generate automatically. Do not edit.'; echo; \
-		  $(top_srcdir)/build/litter/missing --run git log --stat --date=short ) > ChangeLog.tmp \
+		  $(top_srcdir)/build-aux/missing --run git log --stat --date=short ) > ChangeLog.tmp \
 		&& mv -f ChangeLog.tmp $(top_distdir)/ChangeLog \
 		|| ( rm -f ChangeLog.tmp ; \
 		     echo Failed to generate ChangeLog >&2 ); \

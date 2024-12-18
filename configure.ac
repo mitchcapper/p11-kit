@@ -1,4 +1,4 @@
-AC_PREREQ(2.61)
+AC_PREREQ([2.64])
 
 AC_INIT([p11-kit],
 	[0.25.5],
@@ -25,15 +25,15 @@ P11KIT_RPC_MAX=1
 # ------------------------------------------------------------------------------
 
 AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_MACRO_DIR([build/m4])
-AC_CONFIG_AUX_DIR([build/litter])
+AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_AUX_DIR([build-aux])
 AC_REQUIRE_AUX_FILE([tap-driver.sh])
 AM_INIT_AUTOMAKE([1.12 dist-xz no-dist-gzip foreign subdir-objects])
 AM_SANITY_CHECK
 AM_MAINTAINER_MODE([enable])
 m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])],)
 m4_ifdef([PKG_PREREQ], [PKG_PREREQ(0.29)],
-  [m4_fatal([pkg.m4 is too old; copy the latest version in build/m4])])
+  [m4_fatal([pkg.m4 is too old; copy the latest version in m4])])
 
 dnl Enable platform specific extensions.
 AC_USE_SYSTEM_EXTENSIONS
@@ -60,17 +60,20 @@ AC_SUBST(LDFLAGS_Z_NODELETE)
 
 dnl Checks for programs.
 AC_PROG_CC
+gl_EARLY
 AC_PROG_CPP
 AM_PROG_CC_C_O
+
+gl_INIT
 PKG_PROG_PKG_CONFIG
 AM_PATH_PYTHON([3.6],, [:])
 AM_MISSING_PROG([CASTXML], [castxml])
 
 LINGUAS=""
-AM_GNU_GETTEXT([external], [need-ngettext])
-AM_GNU_GETTEXT_VERSION([0.19.8])
+#AM_GNU_GETTEXT([external], [need-ngettext])
+#AM_GNU_GETTEXT_VERSION([0.19.8])
 m4_ifdef([AM_GNU_GETTEXT_REQUIRE_VERSION],[
-AM_GNU_GETTEXT_REQUIRE_VERSION([0.19.8])
+#AM_GNU_GETTEXT_REQUIRE_VERSION([0.19.8])
 ])
 
 if test "$enable_static" = "yes"; then
@@ -228,6 +231,9 @@ if test "$os_unix" = "yes"; then
 	                          [Whether vsock support available])
 	                AC_MSG_RESULT([yes])],
 	               [AC_MSG_RESULT([no])])
+
+else # os_unix = yes
+	AM_CONDITIONAL([NEED_READPASSPHRASE], [false])
 
 fi
 
@@ -714,6 +720,7 @@ AM_CONDITIONAL(WITH_BASH_COMPLETION, [test "$with_bash_completion" = "yes"])
 
 
 AC_CONFIG_FILES([Makefile
+	lib/Makefile
 	common/test-init.sh
 	doc/Makefile
 	doc/manual/Makefile

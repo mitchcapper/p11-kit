@@ -350,7 +350,7 @@ p11_save_open_directory (const char *path,
 	/* We update the permissions when we finish writing */
 	if (mkdir (path, S_IRWXU) < 0) {
 #else /* OS_WIN32 */
-	if (mkdir (path) < 0) {
+	if (mkdir (path,0700) < 0) {
 #endif
 		/* Some random error, report it */
 		if (errno != EEXIST) {

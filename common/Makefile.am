@@ -57,9 +57,11 @@ libp11_tool_la_SOURCES += \
 	$(NULL)
 
 if NEED_READPASSPHRASE
+if !OS_WIN32
 libp11_tool_la_SOURCES += \
 	common/readpassphrase.c \
 	$(NULL)
+endif
 endif
 endif
 
