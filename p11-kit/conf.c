@@ -44,8 +44,9 @@
 #include "message.h"
 #include "path.h"
 #include "private.h"
-
+#ifndef _WIN32
 #include <sys/param.h>
+#endif
 #include <sys/stat.h>
 #include <sys/types.h>
 #ifdef OS_UNIX

@@ -52,13 +52,17 @@
 #include "uri.h"
 
 #include <sys/types.h>
+#ifndef _WIN32
 #include <sys/param.h>
+#endif
 #include <assert.h>
 #include <errno.h>
 #include <limits.h>
 #include <stdlib.h>
 #include <string.h>
+#ifndef _WIN32
 #include <unistd.h>
+#endif
 
 #ifdef ENABLE_NLS
 #include <libintl.h>

@@ -109,7 +109,9 @@ void         p11_dl_close       (void * dl);
  */
 
 #ifdef OS_WIN32
-
+#if !defined(__PRETTY_FUNCTION__) && !defined(__GNUC__)
+#define __PRETTY_FUNCTION__ __FUNCSIG__
+#endif
 #ifndef _WIN32_WINNT
 #define _WIN32_WINNT 0x500
 #endif

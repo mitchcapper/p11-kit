@@ -41,7 +41,7 @@
 #include "p11-kit.h"
 #include "remote.h"
 #include "options.h"
-
+#define WINBOOL BOOL
 #include <assert.h>
 #include <errno.h>
 #include <fcntl.h>
